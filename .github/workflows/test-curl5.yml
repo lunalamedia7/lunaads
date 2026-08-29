@@ -1,0 +1,9 @@
+name: test-curl5
+on:
+  workflow_dispatch: {}
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    steps:
+      - name: no-bearer-word
+        run: curl -sf -X GET "https://lunaads.vercel.app/api/cron/process-publish-jobs" -H "X-Cron-Key: literaltoken123"
