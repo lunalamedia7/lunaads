@@ -1,9 +1,0 @@
-name: test-curl3
-on:
-  workflow_dispatch: {}
-jobs:
-  tick:
-    runs-on: ubuntu-latest
-    steps:
-      - name: literal-header
-        run: curl -sf -X GET "https://lunaads.vercel.app/api/cron/process-publish-jobs" -H "Authorization: Bearer literaltoken123"

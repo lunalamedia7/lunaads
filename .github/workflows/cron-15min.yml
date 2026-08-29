@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: sync-campaign-metrics
-        run: curl -sf -X GET "https://lunaads.vercel.app/api/cron/sync-campaign-metrics" -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"
+        run: |
+          curl -sf -X GET "https://lunaads.vercel.app/api/cron/sync-campaign-metrics" -H "X-Cron-Key: ${{ secrets.CRON_SECRET }}"
       - name: sync-rejections
-        run: curl -sf -X GET "https://lunaads.vercel.app/api/cron/sync-rejections" -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"
+        run: |
+          curl -sf -X GET "https://lunaads.vercel.app/api/cron/sync-rejections" -H "X-Cron-Key: ${{ secrets.CRON_SECRET }}"

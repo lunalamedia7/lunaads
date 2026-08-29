@@ -1,9 +1,0 @@
-name: test-curl2
-on:
-  workflow_dispatch: {}
-jobs:
-  tick:
-    runs-on: ubuntu-latest
-    steps:
-      - name: no-header
-        run: curl -sf -X GET "https://lunaads.vercel.app/api/cron/process-publish-jobs"
