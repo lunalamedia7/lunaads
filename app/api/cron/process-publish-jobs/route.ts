@@ -4,7 +4,10 @@ import { processDuePublishJobs } from "@/lib/campaigns/publish";
 function isAuthorized(request: Request): boolean {
   const secret = process.env.CRON_SECRET;
   if (!secret) return true; // sem secret configurado em dev local
-  return request.headers.get("authorization") === `Bearer ${secret}`;
+  // Header customizado em vez de Authorization: Bearer — esse padrão literal
+  // no YAML do GitHub Actions dispara um bloqueio silencioso de anti-abuso
+  // em contas novas (o workflow nem chega a registrar o trigger direito).
+  return request.headers.get("x-cron-key") === secret;
 }
 
 export async function GET(request: Request) {
