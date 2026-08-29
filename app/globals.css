@@ -1,26 +1,188 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-geist-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-surface-2: var(--surface-2);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-gold: var(--gold);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+ * LunaAds design tokens (Bloco D) — tema escuro é o padrão ("sala de comando").
+ * O tema claro abaixo é uma tradução coerente dos mesmos tokens semânticos,
+ * mantida só para o toggle de tema não quebrar nada.
+ */
+:root {
+  --background: #F6F7FB;
+  --foreground: #12141C;
+  --card: #FFFFFF;
+  --card-foreground: #12141C;
+  --popover: #FFFFFF;
+  --popover-foreground: #12141C;
+  --primary: #2F6BFF;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EEF1F7;
+  --secondary-foreground: #12141C;
+  --muted: #EEF1F7;
+  --muted-foreground: #5C6577;
+  --accent: #EEF3FF;
+  --accent-foreground: #2F6BFF;
+  --accent-soft: rgba(47, 107, 255, 0.08);
+  --destructive: #EF4444;
+  --border: rgba(10, 12, 20, 0.08);
+  --border-strong: rgba(10, 12, 20, 0.14);
+  --input: rgba(10, 12, 20, 0.08);
+  --ring: #2F6BFF;
+  --chart-1: #4F7BFF;
+  --chart-2: #A855F7;
+  --chart-3: #EC4899;
+  --chart-4: #22C55E;
+  --chart-5: #F5A524;
+  --radius: 0.875rem;
+  --surface-2: #F0F2F8;
+  --text-muted: #5C6577;
+  --text-faint: #8B95A7;
+  --success: #16A34A;
+  --warning: #B45309;
+  --danger: #DC2626;
+  --gold: #B45309;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #12141C;
+  --sidebar-primary: #2F6BFF;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #EEF3FF;
+  --sidebar-accent-foreground: #2F6BFF;
+  --sidebar-border: rgba(10, 12, 20, 0.08);
+  --sidebar-ring: #2F6BFF;
+}
+
+.dark {
+  --background: #08090D;
+  --foreground: #E9EDF5;
+  --card: #101319;
+  --card-foreground: #E9EDF5;
+  --popover: #161A22;
+  --popover-foreground: #E9EDF5;
+  --primary: #2F6BFF;
+  --primary-foreground: #FFFFFF;
+  --secondary: #161A22;
+  --secondary-foreground: #E9EDF5;
+  --muted: #161A22;
+  --muted-foreground: #8B95A7;
+  --accent: rgba(47, 107, 255, 0.12);
+  --accent-foreground: #E9EDF5;
+  --accent-soft: rgba(47, 107, 255, 0.12);
+  --destructive: #EF4444;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --input: rgba(255, 255, 255, 0.07);
+  --ring: #2F6BFF;
+  --chart-1: #4F7BFF;
+  --chart-2: #A855F7;
+  --chart-3: #EC4899;
+  --chart-4: #22C55E;
+  --chart-5: #F5A524;
+  --surface-2: #161A22;
+  --text-muted: #8B95A7;
+  --text-faint: #5C6577;
+  --success: #22C55E;
+  --warning: #F5A524;
+  --danger: #EF4444;
+  --gold: #EAB308;
+  --sidebar: #101319;
+  --sidebar-foreground: #E9EDF5;
+  --sidebar-primary: #2F6BFF;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: rgba(47, 107, 255, 0.12);
+  --sidebar-accent-foreground: #2F6BFF;
+  --sidebar-border: rgba(255, 255, 255, 0.07);
+  --sidebar-ring: #2F6BFF;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .starfield {
+    background-image:
+      radial-gradient(1px 1px at 12% 18%, rgba(255, 255, 255, 0.9), transparent 60%),
+      radial-gradient(1px 1px at 34% 62%, rgba(255, 255, 255, 0.7), transparent 60%),
+      radial-gradient(1.5px 1.5px at 58% 28%, rgba(255, 255, 255, 0.85), transparent 60%),
+      radial-gradient(1px 1px at 74% 74%, rgba(255, 255, 255, 0.6), transparent 60%),
+      radial-gradient(1px 1px at 88% 40%, rgba(255, 255, 255, 0.8), transparent 60%),
+      radial-gradient(1.5px 1.5px at 20% 85%, rgba(255, 255, 255, 0.6), transparent 60%),
+      radial-gradient(1px 1px at 45% 10%, rgba(255, 255, 255, 0.5), transparent 60%);
+    background-repeat: no-repeat;
+  }
+
+  .funnel-gradient {
+    background-image: linear-gradient(90deg, #4F7BFF 0%, #A855F7 55%, #EC4899 100%);
+  }
+
+  .micro-label {
+    @apply flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.08em] text-text-faint;
+  }
 }
