@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: process-publish-jobs
-        run: curl -sf -X GET "https://lunaads.vercel.app/api/cron/process-publish-jobs" -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"
+        run: curl -sf -X GET "https://lunaads.vercel.app/api/cron/process-publish-jobs" -H "X-Cron-Key: ${{ secrets.CRON_SECRET }}"
       - name: sync-tiktok
-        run: curl -sf -X GET "https://lunaads.vercel.app/api/cron/sync-tiktok" -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"
+        run: curl -sf -X GET "https://lunaads.vercel.app/api/cron/sync-tiktok" -H "X-Cron-Key: ${{ secrets.CRON_SECRET }}"
       - name: process-appeals
-        run: curl -sf -X GET "https://lunaads.vercel.app/api/cron/process-appeals" -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"
+        run: curl -sf -X GET "https://lunaads.vercel.app/api/cron/process-appeals" -H "X-Cron-Key: ${{ secrets.CRON_SECRET }}"
       - name: run-automations
-        run: curl -sf -X GET "https://lunaads.vercel.app/api/cron/run-automations" -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}"
+        run: curl -sf -X GET "https://lunaads.vercel.app/api/cron/run-automations" -H "X-Cron-Key: ${{ secrets.CRON_SECRET }}"
