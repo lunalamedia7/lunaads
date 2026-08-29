@@ -83,28 +83,43 @@ duplicar itens já criados no TikTok. `normalizeAdGroups()`
 (1 conjunto/1 anúncio) quanto o Estilo Builder (N conjuntos/M anúncios) pro
 mesmo formato — não existe um segundo caminho de código pra publicar.
 
-## Cron jobs (agendador externo — cron-job.org)
+## Cron jobs (GitHub Actions — `.github/workflows/`)
 
 O plano Hobby (gratuito) da Vercel só permite cron jobs nativos rodando no
-máximo 1x/dia — incompatível com a fila de publicação (precisa rodar a cada
-minuto). Por isso `vercel.json` não declara nenhum cron: em vez disso, um
-agendador externo gratuito (cron-job.org) chama essas mesmas rotas via HTTP
-no horário certo. Se um dia a Vercel virar plano Pro, dá pra migrar os crons
-de volta pra `vercel.json` e desligar o cron-job.org.
+máximo 1x/dia — incompatível com a fila de publicação. Por isso `vercel.json`
+não declara nenhum cron: em vez disso, três workflows do GitHub Actions
+chamam essas rotas via HTTP no horário certo, agrupados por frequência
+(`cron-5min.yml`, `cron-15min.yml`, `cron-daily.yml`). Isso só é grátis sem
+limite porque o repositório é **público** — GitHub Actions em repositório
+privado tem cota mensal de minutos e um cron de 5 em 5 minutos estoura essa
+cota em poucos dias. Se um dia a Vercel virar plano Pro, dá pra migrar os
+crons de volta pra `vercel.json` e desativar os workflows.
+
+O `process-publish-jobs` original era pensado pra rodar a cada minuto — o
+GitHub Actions não garante intervalos menores que 5 minutos de forma
+confiável (schedules mais curtos são ignorados/atrasados pela própria
+GitHub), então foi ajustado pra 5 em 5 minutos. Isso não quebra nada — só
+significa que um lote de publicação pode demorar um pouco mais pra terminar
+de processar (o espaçamento entre publicações continua sendo o mesmo,
+definido em `lib/campaigns/publish.ts`; o que muda é de quanto em quanto
+tempo o cron verifica se há um job pronto pra rodar).
 
 | Rota | Frequência | Função |
 |---|---|---|
-| `/api/cron/process-publish-jobs` | a cada minuto | processa a fila de publicação |
+| `/api/cron/process-publish-jobs` | a cada 5 min | processa a fila de publicação |
 | `/api/cron/sync-tiktok` | a cada 5 min | sincroniza BCs/contas (saldo, contas limitadas) |
 | `/api/cron/sync-campaign-metrics` | a cada 15 min | sincroniza métricas de campanhas |
 | `/api/cron/sync-rejections` | a cada 15 min | detecta anúncios reprovados |
-| `/api/cron/process-appeals` | a cada 2 min | envia apelações automáticas (Smart+) |
+| `/api/cron/process-appeals` | a cada 5 min | envia apelações automáticas (Smart+) |
 | `/api/cron/run-automations` | a cada 5 min | executa regras de automação |
 | `/api/cron/cleanup-hardening` | 1x/dia (03h) | limpa `rate_limit_hits`/`error_logs` antigos |
 
-Todas exigem o header `Authorization: Bearer $CRON_SECRET` (configurado como
-header customizado em cada job do cron-job.org) — em dev local, sem
-`CRON_SECRET` configurado, ficam abertas.
+Todas exigem o header `Authorization: Bearer $CRON_SECRET` — guardado como
+secret do repositório (`gh secret set CRON_SECRET`), referenciado nos
+workflows como `${{ secrets.CRON_SECRET }}`. Em dev local, sem `CRON_SECRET`
+configurado, ficam abertas. Dá pra forçar uma execução manual de qualquer
+workflow em Actions → escolher o workflow → "Run workflow" (todos têm
+`workflow_dispatch` habilitado).
 
 ## Notificações in-app
 
